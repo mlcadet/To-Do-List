@@ -12,7 +12,6 @@ function TodoApp() {
   const todos = useSelector((state) => state.todos);
 
   function addTodo(todoText) {
-    console.log("📢 Dispatching ADD_TODO:", todoText);
     dispatch(actions.addTodo(todoText));
   }
 
@@ -24,11 +23,15 @@ function TodoApp() {
     dispatch(actions.completeTodo(todoId));
   }
 
+  function updateTodo(id, newText) {
+    dispatch(actions.updateTodo({ id, newText }));
+  }
+
   return (
     <div className="todo-app">
       <h1>Todo List</h1>
-      <TodoForm addTodo={addTodo} />
-      <TodoList todos={todos} removeTodo={removeTodo} completeTodo={completeTodo} />
+      <TodoForm addTodo={addTodo} updateTodo={updateTodo} />
+      <TodoList todos={todos} removeTodo={removeTodo} completeTodo={completeTodo} updateTodo={updateTodo} />
     </div>
   );
 }
