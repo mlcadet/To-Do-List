@@ -1,24 +1,24 @@
 import { ImmerReducer, createReducerFunction } from "immer-reducer";
 
-// Initial state
 const initialState = {
-  todos: [],  
+  todos: [],
 };
 
-// Reducer class
 class TodoReducer extends ImmerReducer {
-  addTodo(todo) {
-    this.draftState.todos.push(todo);
+  addTodo(todoText) {
+    console.log("🛠 Reducer adding todo:", todoText); // ✅ Debugging log
+    this.draftState.todos.push({ id: Date.now(), text: todoText, isComplete: false });
   }
 
-  removeTodo(index) {
-    this.draftState.todos.splice(index, 1);
+  removeTodo(todoId) {
+    this.draftState.todos = this.draftState.todos.filter(todo => todo.id !== todoId);
   }
 
-  toggleComplete(index) {
-    this.draftState.todos[index].completed = !this.draftState.todos[index].completed;
+  completeTodo(todoId) {
+    this.draftState.todos = this.draftState.todos.map(todo =>
+      todo.id === todoId ? { ...todo, isComplete: !todo.isComplete } : todo
+    );
   }
 }
 
-// Create and export reducer function
 export default createReducerFunction(TodoReducer, initialState);

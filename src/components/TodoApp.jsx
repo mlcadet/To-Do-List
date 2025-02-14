@@ -12,23 +12,23 @@ function TodoApp() {
   const todos = useSelector((state) => state.todos);
 
   function addTodo(todoText) {
-    dispatch(actions.addTodo({ text: todoText, completed: false }));
+    console.log("📢 Dispatching ADD_TODO:", todoText);
+    dispatch(actions.addTodo(todoText));
   }
 
-  function toggleTodo(index) {
-    dispatch(actions.toggleComplete(index));
+  function removeTodo(todoId) {
+    dispatch(actions.removeTodo(todoId));
   }
 
-  function removeTodo(index) {
-    dispatch(actions.removeTodo(index));
+  function completeTodo(todoId) {
+    dispatch(actions.completeTodo(todoId));
   }
 
   return (
     <div className="todo-app">
       <h1>Todo List</h1>
-      {/* ✅ Pass addTodo as a prop */}
-      <TodoForm addTodo={addTodo} />  
-      <TodoList todos={todos} toggleTodo={toggleTodo} removeTodo={removeTodo} />
+      <TodoForm addTodo={addTodo} />
+      <TodoList todos={todos} removeTodo={removeTodo} completeTodo={completeTodo} />
     </div>
   );
 }
